@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  luffy_image:
+    build:
+      context: ./challenges/luffy
+      dockerfile: Dockerfile
+    container_name: luffy_challenge
+    command: ["tail", "-f", "/dev/null"]  # Esto evita que el contenedor se detenga
+    ports:
+      - "8081:8080"
+      - "2201:22"
+    volumes:
+      - ./challenges_volumes/luffy_ctf:/luffy_ctf
+    networks:
+      - ctf_network
+    # Deshabilitar logs para este contenedor
+    # logging:
+    #   driver: "none"
+
+networks:
+  ctf_network:
+    driver: bridge
