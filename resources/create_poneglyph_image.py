@@ -9,7 +9,7 @@ import piexif
 poneglyphs = {
     "luffy": "resources/poneglyphs/luffy.jpeg",
     "zoro": "resources/poneglyphs/zoro.jpeg",
-    "usopp": "resources/poneglyphs/ussop.jpeg",
+    "usopp": "resources/poneglyphs/usopp.jpeg",
     "sanji": "resources/poneglyphs/sanji.jpeg",
     "nami": "resources/poneglyphs/nami.jpeg",
     "robin": "resources/poneglyphs/robin.jpeg",

@@ -50,8 +50,8 @@ def create_flag_challange(challenge, flag_password):
         flag_cr4 = generate_rc4(flag_password, student_id)
         return flag_cr4.hex()
     if challenge == "usopp":
-        flag_ussop = usopp_cipher(flag_password, 1234)
-        return flag_ussop.hex()
+        flag_usopp = usopp_cipher(flag_password, 1234)
+        return flag_usopp.hex()
     if challenge == "nami":
         flag_nami = nami_cipher(flag_password, student_id)
         return flag_nami.hex()
