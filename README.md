@@ -1,4 +1,3 @@
-
 # CTF_ONEPICE_SYMMETRIC_CIPHER
 <a id="readme-top"></a>
 
@@ -35,14 +34,12 @@ cd CTF_INTRO_CIFRADOS
 2. Instalar dependencias
 ```bash
 pip3 install -r scripts/requirements.txt
-
 ```
 
 3. Ejecuta el script de python
 
 ```bash
 python generate_challenges
-
 ```
 
 4. Ejecuta el docker compose
@@ -59,12 +56,29 @@ docker ps
 
 6. Dentro del contenedor se crearán 6 retos, ejecutalos individualmente
 
-- luffy_challenge
-- zoro_challenge
-- nami_challenge
-- sanji_challenge
-- robin_challenge
-- usopp_challenge
+- luffy_challenge 🤠
+- zoro_challenge 🏴‍☠️
+- usopp_challenge 🎯
+- nami_challenge 🌊
+- sanji_challenge 🔥
+- robin_challenge 📜
+
+<!-- CREAR UNA TABLA -->
+|**Usuario**|**Reto**|**Nivel**|**Objetivo**|
+|-------------|-----------------------|-----------|---------------------------------------------------------------------------------------|
+| Luffy 🤠| XOR | 🟢 Facil | Encontrar la flag cifrada en un poneglyph.txt, aplicando XOR con su carné como clave. |
+| Zoro 🏴‍☠️ | Rompiendo RC4 | 🟡 Medio  | |
+| Usopp 🎯| Stream Cipher Custom  | 🟡 Medio | |
+| Nami 🌊 | ChaCha20 Playground   | 🟡 Medio | |
+| Sanji 🔥| Ataque de correlación | 🔴 Alto | |
+| Robin 📜| TRNG o PRNG inseguro  | 🔴 Alto | |
+
+El primer reto a resolver es una aventura con Luffy, debes iniciar sesión utilizando la contraseña onepiece
+
+```bash
+su luffy
+password: onepiece
+```
 
 ```bash
 docker exec -it {challengeX_ctf} bash
@@ -83,32 +97,66 @@ python3 -m http.server 8080
 - usopp_challenge 8086
 
 
-
 ## 📝 Tips para Resolver los Desafíos
-1.	Explora los archivos del sistema
-```bash
-- Muchas pistas pueden estar escondidas en lugares comunes como:
-  - Mensajes del sistema (A veces los administradores dejan mensajes útiles o pistas ahí.)
-    - Revisa el archivo /etc/motd (Mensaje del Día) 
-  - Logs de autenticación
-    - Examina /var/log/auth.log para identificar intentos de acceso fallidos o información sospechosa.
-  - Archivos de configuración ocultos
-    - Busca en directorios como /etc o carpetas específicas de los usuarios
-```
+1. **Explora los archivos del sistema**
+    - Muchas pistas pueden estar escondidas en lugares comunes como:
+      - Mensajes del sistema (/etc/motd)
+      - Logs de autenticación (/var/log/auth.log)
+      - Archivos de configuración ocultos (/etc, /home)
+    
+2. **Revisa los usuarios y sus archivos**
+    - Identifica los usuarios en el sistema:
+      ```bash
+      cat /etc/passwd
+      ```
+    - Explora los directorios personales en /home/ con:
+      ```bash
+      ls -la /home/<usuario>
+      ```
 
-2. Revisa los usuarios y sus archivos
-	Identifica los usuarios en el sistema con:
-  ```bash
-cat /etc/passwd
-```
-3. Explora los directorios personales en /home/. Revisa archivos ocultos con:
-  ```bash
-ls -la /home/<usuario>
-```
-4. Busca archivos que parezcan interesantes, como
-  ```bash
- .flag.txt, .hidden, .instrucciones,o incluso archivos con permisos inusuales.
-```
+3. **Busca archivos con permisos inusuales**
+    - Archivos como `.flag.txt`, `.hidden`, `.instrucciones` pueden contener pistas valiosas.
+    - Encuentra archivos con permisos de ejecución o escritura inusuales:
+      ```bash
+      find / -type f -perm -4000 2>/dev/null
+      ```
+
+4. **Analiza el tráfico de red**
+    - Si el reto implica una comunicación cifrada, captura paquetes con:
+      ```bash
+      tcpdump -i eth0 -w captura.pcap
+      ```
+    - Luego examina los paquetes en Wireshark para encontrar patrones.
+
+5. **Prueba herramientas criptográficas**
+    - Usa `xxd` para ver contenido hexadecimal de archivos sospechosos:
+      ```bash
+      xxd archivo.bin | head
+      ```
+    - Usa `openssl` para intentar descifrar archivos cifrados:
+      ```bash
+      openssl enc -d -aes-256-cbc -in archivo.enc -out archivo.txt -k clave
+      ```
+
+6. **Busca texto cifrado en logs o configuraciones**
+    - Si encuentras texto aparentemente aleatorio, intenta detectar el cifrado usado con `cyberchef` o scripts de Python.
+
+## 👥 Contribuciones
+Si deseas contribuir al proyecto, por favor sigue los siguientes pasos:
+1. Realiza un fork del repositorio.
+2. Crea una nueva rama para tu funcionalidad (`git checkout -b feature/nueva-funcionalidad`).
+3. Haz commit de tus cambios (`git commit -m 'Añadir nueva funcionalidad'`).
+4. Haz push a la rama (`git push origin feature/nueva-funcionalidad`).
+5. Abre un Pull Request.
+
+## 📞 Contacto
+Si tienes preguntas o comentarios, puedes contactarnos a través de nuestras redes sociales:
+
+* [![Instagram][Instagram]][Instagram-url]
+* [![Website][Website]][Website-url]
+
+<p align="right">(<a href="#readme-top">Ir al inicio</a>)</p>
+
 
 
 ## 👥 Contribuciones

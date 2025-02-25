@@ -64,3 +64,15 @@ def get_challenges_texts(random_number=None):
     else:
         return the_demons_of_ohara
     
+def get_texts(random_number):
+    texts_list = get_challenges_texts(random_number)
+    # Definir los textos para los retos
+    texts = {
+        "luffy": texts_list[0],
+        "zoro": texts_list[1],
+        "usopp": texts_list[2],
+        "sanji": texts_list[3],
+        "nami": texts_list[4],
+        "robin": texts_list[5],
+    }
+    return texts

@@ -2,7 +2,7 @@
 FROM ubuntu:22.04
 
 # Evitar interactividad en la instalación de paquetes
-ARG DEBIAN_FRONTEND=noninteractive
+# ARG DEBIAN_FRONTEND=noninteractive
 
 # Actualizar e instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
@@ -17,25 +17,23 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     && rm -rf /var/lib/apt/lists/*
 
-# Crear un usuario "usopp" y darle una contraseña
-RUN useradd -ms /bin/bash usopp && echo "usopp:onepiece" | chpasswd && adduser usopp sudo
+# Crear un usuario "nami" y darle una contraseña
+RUN useradd -ms /bin/bash user_challenge
 
 # Deshabilitamos el acceso directo como root para que los alumnos no inicien con permisos de administrador
 RUN passwd -l root
 
 # Establecer el directorio de trabajo
-WORKDIR /home/usopp
+WORKDIR /home/nami
 
 # Copiar los archivos del reto dentro del contenedor
+COPY ./ONEPIECE /home/nami/ONEPIECE
 
-COPY ./flag.txt /home/usopp/flag.txt
-COPY ./poneglyph.jpeg /home/usopp/poneglyph.jpeg
+# Cambiar la propiedad de los archivos al usuario nami
+RUN chown -R nami:nami /home/nami
 
-# Cambiar la propiedad de los archivos al usuario usopp
-RUN chown -R usopp:usopp /home/usopp
-
-# Cambiar al usuario "usopp" por defecto
-USER usopp
+# Cambiar al usuario "nami" por defecto
+USER nobody
 
 EXPOSE 8000 
 # Script de inicio

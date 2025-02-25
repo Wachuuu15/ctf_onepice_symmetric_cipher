@@ -2,7 +2,7 @@
 FROM ubuntu:22.04
 
 # Evitar interactividad en la instalación de paquetes
-ARG DEBIAN_FRONTEND=noninteractive
+# ARG DEBIAN_FRONTEND=noninteractive
 
 # Actualizar e instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
@@ -17,25 +17,23 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     && rm -rf /var/lib/apt/lists/*
 
-# Crear un usuario "zoro" y darle una contraseña
-RUN useradd -ms /bin/bash zoro && echo "zoro:onepiece" | chpasswd && adduser zoro sudo
+# Crear un usuario "robin" y darle una contraseña
+RUN useradd -ms /bin/bash user_challenge
 
 # Deshabilitamos el acceso directo como root para que los alumnos no inicien con permisos de administrador
 RUN passwd -l root
 
 # Establecer el directorio de trabajo
-WORKDIR /home/zoro
+WORKDIR /home/robin
 
 # Copiar los archivos del reto dentro del contenedor
+COPY ./ONEPIECE /home/robin/ONEPIECE
 
-COPY ./flag.txt /home/zoro/flag.txt
-COPY ./poneglyph.jpeg /home/zoro/poneglyph.jpeg
+# Cambiar la propiedad de los archivos al usuario robin
+RUN chown -R robin:robin /home/robin
 
-# Cambiar la propiedad de los archivos al usuario zoro
-RUN chown -R zoro:zoro /home/zoro
-
-# Cambiar al usuario "zoro" por defecto
-USER zoro
+# Cambiar al usuario "robin" por defecto
+USER nobody
 
 EXPOSE 8000 
 # Script de inicio

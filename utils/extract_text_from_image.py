@@ -1,6 +1,7 @@
 
 from PIL import Image
 import piexif
+from scripts.utils.xor_function import xor_cipher
 
 def extraer_texto_metadata(imagen_path):
     # Abrir la imagen
@@ -15,16 +16,6 @@ def extraer_texto_metadata(imagen_path):
         return texto.decode('utf-8')
     return None
 
-# Función para cifrar un texto con XOR
-def xor_cipher(text, key):
-    # Convertir tanto el texto como la clave a bytes
-    text_bytes = text.encode()  # Convertir el texto a bytes
-    key_bytes = key.encode()  # Convertir la clave a bytes
-
-    # Cifrar con XOR
-    cipher_text = bytes([text_bytes[i] ^ key_bytes[i % len(key_bytes)] for i in range(len(text_bytes))])
-    
-    return cipher_text
     
 # Uso del código para descifrar la imagen
 # Ejemplo de uso

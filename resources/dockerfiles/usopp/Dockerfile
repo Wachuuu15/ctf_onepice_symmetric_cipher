@@ -2,7 +2,7 @@
 FROM ubuntu:22.04
 
 # Evitar interactividad en la instalación de paquetes
-ARG DEBIAN_FRONTEND=noninteractive
+# ARG DEBIAN_FRONTEND=noninteractive
 
 # Actualizar e instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
@@ -17,25 +17,23 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     && rm -rf /var/lib/apt/lists/*
 
-# Crear un usuario "sanji" y darle una contraseña
-RUN useradd -ms /bin/bash sanji && echo "sanji:onepiece" | chpasswd && adduser sanji sudo
+# Crear un usuario "usopp" y darle una contraseña
+RUN useradd -ms /bin/bash user_challenge
 
 # Deshabilitamos el acceso directo como root para que los alumnos no inicien con permisos de administrador
 RUN passwd -l root
 
 # Establecer el directorio de trabajo
-WORKDIR /home/sanji
+WORKDIR /home/usopp
 
 # Copiar los archivos del reto dentro del contenedor
+COPY ./ONEPIECE /home/usopp/ONEPIECE
 
-COPY ./flag.txt /home/sanji/flag.txt
-COPY ./poneglyph.jpeg /home/sanji/poneglyph.jpeg
+# Cambiar la propiedad de los archivos al usuario usopp
+RUN chown -R usopp:usopp /home/usopp
 
-# Cambiar la propiedad de los archivos al usuario sanji
-RUN chown -R sanji:sanji /home/sanji
-
-# Cambiar al usuario "sanji" por defecto
-USER sanji
+# Cambiar al usuario "usopp" por defecto
+USER nobody
 
 EXPOSE 8000 
 # Script de inicio
