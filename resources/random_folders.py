@@ -1,7 +1,5 @@
 import os
 import random
-import array
-import string
 import datetime
 
 ARCOS = [

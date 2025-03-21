@@ -1,9 +1,8 @@
 import os
-import random
 import numpy as numpy
 from PIL import Image, ImageDraw
-import hashlib
 import piexif
+import pyzipper
 
 # Definir las imágenes "poneglyphs"
 poneglyphs = {
@@ -14,6 +13,12 @@ poneglyphs = {
     "nami": "resources/poneglyphs/nami.jpeg",
     "robin": "resources/poneglyphs/robin.jpeg",
 }
+
+# Función para crear un ZIP con contraseña en Windows
+def zip_with_password(zip_path, file_path, password):
+    with pyzipper.AESZipFile(zip_path, 'w', compression=pyzipper.ZIP_LZMA, encryption=pyzipper.WZ_AES) as zf:
+        zf.setpassword(password.encode())
+        zf.write(file_path, os.path.basename(file_path))
 
 
 # Función para crear imágenes "poneglyph"
@@ -42,10 +47,19 @@ def create_poneglyph_image(text, challenge, password, location):
     # Convertir los metadatos a formato EXIF
     exif_bytes = piexif.dump(exif_dict)
 
-    # Guardar la imagen con el texto visible y los metadatos
-    img.save(f"challenges/{challenge}/poneglyph.jpeg", exif=exif_bytes)
+    # Guardar la imagen con el texto visible y los metadatos# Guardar la imagen con el texto visible y los metadatos
+    image_path = f"challenges/{challenge}/poneglyph.jpeg"
+    img.save(image_path, exif=exif_bytes)
     # Guardar un zip de la imagen con password
      
-    os.system(f"zip -P {password} -r {location}/poneglyph.zip challenges/{challenge}/poneglyph.jpeg")
-    # Eliminar la imagen original
-    os.system(f"rm challenges/{challenge}/poneglyph.jpeg")
+    # validar si el Os es Windows
+    if os.name == 'nt':
+        print('Windows', os.name)
+        zip_with_password(f"{location}/poneglyph.zip", image_path, password)
+        os.remove(image_path)
+    else:
+        print('Linux', os.name)
+        # Crear un archivo ZIP con contraseña
+        os.system(f"zip -P {password} -r {location}/poneglyph.zip {image_path}")
+        # Eliminar la imagen original
+        os.system(f"rm {image_path}")

@@ -1,10 +1,9 @@
 import os
 import random
 import numpy as numpy
-from PIL import Image, ImageDraw
 import hashlib
-import piexif
-from resources.poneglyph_content import (get_challenges_texts, get_texts)
+import shutil
+from resources.poneglyph_content import get_texts
 from resources.create_poneglyph_image import create_poneglyph_image
 from resources.random_folders import main as random_folders
 from resources.create_docker_file import create_docker_file
@@ -79,7 +78,11 @@ def create_flag(challenge, flag_password, location):
 # Función para generar los retos
 def build_challenges():
     # remove old challenges directory
-    os.system("rm -rf challenges")
+    # remove old challenges directory
+    if os.path.exists("challenges"):
+        print("Removing challenges directory")
+        shutil.rmtree("challenges")
+        os.system("rm -rf challenges")
     flag_password = "onepiece"
 
     texts = get_texts(random_number)
@@ -100,7 +103,6 @@ def build_challenges():
         )
         # Crear la flag
         flag_password = create_flag(challenge, flag_password, location_flag)
-
 
 build_challenges()
 print("Retos generados con éxito!")
