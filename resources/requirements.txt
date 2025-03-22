@@ -1,6 +1,4 @@
 Pillow
 numpy
 piexif
-hashlib
-shutil
 pyzipper
