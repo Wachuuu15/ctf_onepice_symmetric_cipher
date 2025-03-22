@@ -1,7 +1,7 @@
 
 from PIL import Image
 import piexif
-from scripts.utils.xor_function import xor_cipher
+from utils.luffy_xor import xor_cipher
 
 def extraer_texto_metadata(imagen_path):
     # Abrir la imagen
