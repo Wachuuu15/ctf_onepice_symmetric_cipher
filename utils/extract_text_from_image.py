@@ -1,7 +1,7 @@
 
 from PIL import Image
 import piexif
-from utils.luffy_xor import xor_cipher
+from luffy_xor import xor_cipher
 
 def extraer_texto_metadata(imagen_path):
     # Abrir la imagen
@@ -19,7 +19,7 @@ def extraer_texto_metadata(imagen_path):
     
 # Uso del código para descifrar la imagen
 # Ejemplo de uso
-image_path = "challenges/luffy/poneglyph.jpeg"
+image_path = "utils/poneglyph_zoro.jpeg"
 student_id = input("Introduce tu carné para descifrar el mensaje: ")
 texto_cifrado = extraer_texto_metadata(image_path)
 decrypted_text = xor_cipher(texto_cifrado, student_id)
