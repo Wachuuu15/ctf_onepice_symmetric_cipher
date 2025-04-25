@@ -8,7 +8,7 @@ def generate_keystream(seed, length):
 def decrypt(ciphertext_hex):
     cipherbytes = unhexlify(ciphertext_hex)
     
-    # Probamos primero con el carné como semilla
+    # carne semilla
     seed_candidates = [21276, 2127, 212, 21, 2] + list(range(10000))
     
     for seed in seed_candidates:

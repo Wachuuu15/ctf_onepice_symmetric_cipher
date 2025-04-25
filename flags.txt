@@ -1,0 +1,4 @@
+Luffy challenge XOR: FLAG_78f05d5039d9ea2eee8b3478a2546ccb
+Zoro - Rompiendo RC4: FLAG_e20401e7941fbef68990bbb444ca3282
+Usopp - XOR Cipher Custom: FLAG_2ae6ccfd223639e75575ff70c8890c94
+Nami - Chacha20: FLAG_2c627a52e38c8396ff0013aa704a3132

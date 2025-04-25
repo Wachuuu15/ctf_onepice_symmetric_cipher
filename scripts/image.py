@@ -10,7 +10,6 @@ img = Image.open(BytesIO(response.content))
 artist_cifrado = img.getexif().get(315, "")
 print("Texto cifrado:", artist_cifrado)
 
-# Función XOR (misma que usamos en retos anteriores)
 def xor_decrypt(cifrado, clave):
     return bytes([ord(c) ^ ord(clave[i % len(clave)]) for i, c in enumerate(cifrado)]).decode('utf-8', errors='ignore')
 
